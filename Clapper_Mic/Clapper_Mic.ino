@@ -17,13 +17,13 @@ void loop(){
     
   if(digitalRead(pinMic)){
     delay(100); //Filtro para el ruido
-    if(estadoDect==LOW){
+    if(estadoDect==LOW){ //Deteccion primera palmada
       Serial.println("A");
       tiempo=millis();
       estadoDect=HIGH;
-    }else{
+    }else{ //Deteccion segunda palmada
       long tiempo_trans = millis()-tiempo;
-      if(tiempo_trans>200 && tiempo_trans<420){
+      if(tiempo_trans>200 && tiempo_trans<420){ //Comprobacion de tiempo entre palmadas
         if(estadoOut){
           estadoOut=LOW;
         }else{
@@ -34,9 +34,9 @@ void loop(){
       estadoDect=LOW;
     }
   }
-  if(estadoDect==HIGH){
+  if(estadoDect==HIGH){ //Volver al estado inicial si solo se ha detectado 1 palmada
     long tiempo_trans = millis()-tiempo;
-    if(tiempo_trans>350){
+    if(tiempo_trans>450){
       estadoDect=LOW;
     }
   }
